@@ -1,20 +1,14 @@
-import copy 
-
-def get_gcd(num1, num2): #30, 8
-    num1 = int(num1)
-    num2 = int(num2)
-    smallestNum = min(num1, num2)
-    factor = 0
-    for i in range(1, smallestNum + 1):
-        if smallestNum % i == 0 and num2 % i == 0:
-            factor = i 
-
-    return factor 
+import copy
+import math 
 
 class Fraction():
     def __init__(self, numerator, denominator, isMixed=False, wholenum=None):
         self.wholenum = wholenum
         self.numerator = int(numerator)
+
+        if denominator == 0: 
+            return "Error: Divide by zero."
+            
         self.denominator = int(denominator)
         self.isMixed = isMixed 
 
@@ -23,13 +17,9 @@ class Fraction():
             self.wholenum = None
 
     def reduce(self):
-        #gcd = get_gcd(self.numerator, self.denominator)
-        import math 
         gcd = math.gcd(self.numerator, self.denominator)
-        print("GCD", gcd)
         self.numerator = self.numerator / gcd 
         self.denominator = self.denominator / gcd 
-
 
     def prepareForAddOrSub(self, o):
         print("preparing for addition")
@@ -68,6 +58,10 @@ class Fraction():
         temp = o.numerator
         numerator = o.denominator
         denominator = temp 
+
+        if denominator == 0:
+            return "Error: Divide by zero."
+
         newNum = Fraction(numerator=numerator, denominator=denominator)
 
         return self * newNum 

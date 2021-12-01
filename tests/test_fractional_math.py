@@ -1,5 +1,6 @@
 from fractional_math.fractional_math import calculate
 
+# Integration Tests
 class Test_simple_whole_math():
     def test_two_nums(self):
         assert "2" == calculate("1 + 1").toString()
@@ -70,3 +71,12 @@ class Test_zero():
     def test_mul_zero(self):
         assert calculate("1/2 * 0").toString() == "0"
 
+    def test_div_zero(self):
+        assert calculate("1/2 / 0") == "Error: Divide by zero."
+
+class Test_negatives():
+    def test_whole_add(self):
+        assert calculate("-2 + -2").toString() == "4"
+
+    def test_whole_sub(self):
+        assert calculate("-2 - -2").toString() == "0"
