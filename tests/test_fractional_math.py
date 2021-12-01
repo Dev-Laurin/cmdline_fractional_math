@@ -42,3 +42,31 @@ class Test_simple_fractional_math():
     
     def test_add_ret_frac(self):
         assert calculate("3/6 + 1/6").toString() == "2/3"
+
+class Test_improper_fractional_math():
+    def test_add(self):
+        assert calculate("4/3 + 7/3").toString() == "3_2/3"
+        assert calculate("9/2 + 7/5").toString() == "5_9/10"
+
+    def test_sub(self):
+        assert calculate("4/3 - 7/3").toString() == "-1"
+        assert calculate("9/2 - 7/5").toString() == "3_1/10"
+
+    def test_mul(self):
+        assert calculate("4/3 * 7/3").toString() == "3_1/9"
+        assert calculate("9/2 * 7/5").toString() == "6_3/10"
+
+    def test_div(self):
+        assert calculate("4/3 / 7/3").toString() == "4/63"
+        assert calculate("9/2 / 7/5").toString() == "9/70"
+
+class Test_zero():
+    def test_add_zero(self):
+        assert calculate("0 + 1/2").toString() == "1/2"
+    
+    def test_sub_zero(self):
+        assert calculate("1/2 - 0").toString() == "1/2"
+
+    def test_mul_zero(self):
+        assert calculate("1/2 * 0").toString() == "0"
+
