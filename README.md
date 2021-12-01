@@ -21,3 +21,18 @@ Example run:
 ? 2_3/8 + 9/8
 
 = 3_1/2
+
+# Run Tests 
+* Clone repo
+* Run setup.py from Python 3+
+```python
+python3 setup.py
+```
+* Install package via symlink for dev code
+```
+pip install -e .
+```
+* Run pytest
+```
+pytest
+```
