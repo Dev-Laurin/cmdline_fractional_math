@@ -50,7 +50,10 @@ def main():
 	user_input = ""
 	while(user_input != "quit"):
 		user_input = input("? ")
-		print("= " + calculate(user_input).toString())
+		try:
+			print("= " + calculate(user_input).toString())
+		except ZeroDivisionError:
+			print("= " + "Error: Division by zero.")
 
 if __name__ == '__main__':
     main()

@@ -7,8 +7,8 @@ class Fraction():
         self.numerator = int(numerator)
 
         if denominator == 0: 
-            return "Error: Divide by zero."
-            
+            raise ZeroDivisionError("Fraction init cannot have 0 as a denominator.")
+
         self.denominator = int(denominator)
         self.isMixed = isMixed 
 
@@ -22,29 +22,21 @@ class Fraction():
         self.denominator = self.denominator / gcd 
 
     def prepareForAddOrSub(self, o):
-        print("preparing for addition")
         lhs = copy.deepcopy(self)
         rhs = copy.deepcopy(o) 
         
         lhs.denominator = self.denominator * o.denominator 
-        print("new denominator", lhs.denominator)
         lhs.numerator = self.numerator * o.denominator
         rhs.denominator = lhs.denominator
-        print(rhs.numerator, rhs.denominator, rhs.wholenum)
-        print(self.denominator)
         rhs.numerator = o.numerator * self.denominator
-        print("new numerator [lhs, rhs]", lhs.numerator, rhs.numerator)
         return [lhs, rhs]
         
 
     def __add__(self, o):
         res = self.prepareForAddOrSub(o)
         numerator = res[0].numerator + res[1].numerator 
-        print("Added nume", numerator)
-        print("new deno", res[1].denominator)
         newNum = Fraction(numerator, res[1].denominator)
         newNum.reduce()
-        print(newNum.numerator, newNum.denominator)
         return newNum
 
     def __mul__(self, o):
@@ -60,7 +52,7 @@ class Fraction():
         denominator = temp 
 
         if denominator == 0:
-            return "Error: Divide by zero."
+            raise ZeroDivisionError("Division Overloading: Fraction cannot have 0 as a denominator.")
 
         newNum = Fraction(numerator=numerator, denominator=denominator)
 

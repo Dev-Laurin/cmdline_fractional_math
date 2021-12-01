@@ -72,11 +72,29 @@ class Test_zero():
         assert calculate("1/2 * 0").toString() == "0"
 
     def test_div_zero(self):
-        assert calculate("1/2 / 0") == "Error: Divide by zero."
+        try:
+            calculate("1/2 / 0").toString()
+        except ZeroDivisionError:
+            assert 1 == 1 
 
 class Test_negatives():
     def test_whole_add(self):
-        assert calculate("-2 + -2").toString() == "4"
+        assert calculate("-2 + -2").toString() == "-4"
 
     def test_whole_sub(self):
         assert calculate("-2 - -2").toString() == "0"
+
+    def test_frac_add(self):
+        assert calculate("-1/2 + -1/2").toString() == "-1"
+
+    def test_frac_sub(self):
+        assert calculate("-1/2 - -1/2").toString() == "0"
+
+    def test_mixed_add(self):
+        assert calculate("-3_1/4 + -5_1/4").toString() == "-8_1/2"
+
+    def test_mixed_sub(self):
+        assert calculate("-3_1/4 - -5_1/4").toString() == "-2"
+
+#Multiple spaces 
+#malformed input

@@ -1,4 +1,5 @@
-from enum import Enum 
+from enum import Enum
+from sys import prefix 
 from .fraction import Fraction 
 from .op import Operator 
 
@@ -63,17 +64,23 @@ def Lex(string):
     lexeme = ""
     i = 0 
     CURRENT_STATE = STATE.START
+    PREV_STATE = CURRENT_STATE
 
     while i < len(string): 
+        print("PREV_STATE: ", PREV_STATE)
+        print("CURRENT_STATE ", CURRENT_STATE)
         char = string[i]
+        print("char ", char)
         #Check if character can be converted to a number
         if isNum(char):
             lexeme += char
+            PREV_STATE = CURRENT_STATE 
             CURRENT_STATE = STATE.NUM 
 
             if i + 1 < len(string):
                 if string[i + 1] == "_":
                     #we have a mixed number 
+                    PREV_STATE = CURRENT_STATE 
                     CURRENT_STATE = STATE.MIXED_NUM
                     #Find the numerator
                     j = i + 2
@@ -100,22 +107,39 @@ def Lex(string):
                     i = j - 1
             else:
                 #end of string -- add the num
+                print("NUM FOUND: " + str(lexeme))
                 lexemes.append(Lexeme(LEX.NUM, int(lexeme)))
 
         else: 
             if CURRENT_STATE == STATE.NUM:
                 #expression is a number --save 
+                print("NUM FOUND: " + str(lexeme))
                 lexemes.append(Lexeme(LEX.NUM, int(lexeme)))
                 lexeme = ""
-
-            if char in "*/+-":
-                lexemes.append(Lexeme(LEX.OP,char))   
+            
+            if char in "*/+":
+                #True OP
+                lexemes.append(Lexeme(LEX.OP,char))  
+                PREV_STATE = CURRENT_STATE 
+                CURRENT_STATE = STATE.OP 
+            elif char in "-" and CURRENT_STATE == STATE.SPACE and (PREV_STATE == STATE.NUM or PREV_STATE == STATE.MIXED_NUM):
+                #True OP
+                print("OP FOUND: -")
+                lexemes.append(Lexeme(LEX.OP,char))  
+                PREV_STATE = CURRENT_STATE 
+                CURRENT_STATE = STATE.OP 
+            elif char in "-" and (PREV_STATE == STATE.OP or PREV_STATE == STATE.START): 
+                print("NEGATIVE NUM BEGIN")
+                #Negative Num
+                lexeme += char
+                PREV_STATE = CURRENT_STATE 
+                CURRENT_STATE = STATE.NUM 
             elif char == " ":
                 #skip, no need to save 
+                PREV_STATE = CURRENT_STATE
                 CURRENT_STATE = STATE.SPACE 
             else: 
                 raise ValueError("Invalid character in string.")
         i += 1 
 
     return lexemes
-
