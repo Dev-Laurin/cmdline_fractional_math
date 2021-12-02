@@ -94,7 +94,19 @@ class Test_negatives():
         assert calculate("-3_1/4 + -5_1/4").toString() == "-8_1/2"
 
     def test_mixed_sub(self):
-        assert calculate("-3_1/4 - -5_1/4").toString() == "-2"
+        assert calculate("-3_1/4 - -5_1/4").toString() == "2"
 
-#Multiple spaces 
+class Test_spaces():
+    def test_prepend_spaces(self):
+        assert calculate("   -3_1/4 - -5_1/4").toString() == "2"
+
+    def test_middle_spaces(self):
+        assert calculate("-3_1/4    -    -5_1/4").toString() == "2"
+
+    def test_end_spaces(self):
+        assert calculate("-3_1/4 - -5_1/4      ").toString() == "2"
+
+    def test_spaces_everywhere(self):
+        assert calculate("    -3_1/4     -      -5_1/4   ").toString() == "2"
+        
 #malformed input
