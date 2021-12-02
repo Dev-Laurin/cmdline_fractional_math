@@ -7,20 +7,29 @@ def convert_to_reverse_polish_notation(lexemes):
     OUT = []
     OP = []
 
+    op_count = 0 
+    num_count = 0
+
     for lex in lexemes:
         if lex.TYPE == LEX.NUM or lex.TYPE == LEX.MIXED:
             OUT.append(lex)
+            num_count += 1 
         elif lex.TYPE == LEX.OP:
             if len(OP) > 0 and lex.VAL <= OP[-1].VAL:
                 OUT.append(OP[-1])
                 OP.pop(0)
                 OP.append(lex)
+                op_count += 1 
             else:
                 OP.append(lex)
 
     #end of lexemes, push all operators 
     for op in OP[::-1]:
         OUT.append(op)
+        op_count += 1 
+
+    if op_count + 1 != num_count:
+        raise ValueError("Number of operators is not valid for the number of operands given.")
 
     return OUT
 
@@ -46,15 +55,18 @@ def calculate(str):
     return res.VAL 
 
 def main():
-	print("Fractional calculator. Type quit to exit.")
-	user_input = ""
-	while(user_input != "quit"):
-		user_input = input("? ")
-		try:
-			print("= " + calculate(user_input).toString())
-		except ZeroDivisionError:
-			print("= " + "Error: Division by zero.")
+    print("Fractional calculator. Type q to exit.")
+    user_input = ""
+    while(user_input != "quit"):
+        user_input = input("? ")
+        try:
+            print("= " + calculate(user_input).toString())
+        except ZeroDivisionError:
+            print("Error: Division by zero.")
+        except TypeError:
+            print("Error: Invalid input. Must have operands and operators separated by spaces with the number of operators < number of operands.")
+        except ValueError as e:
+            print("Error:", e)
 
 if __name__ == '__main__':
     main()
-
