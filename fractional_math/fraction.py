@@ -2,8 +2,11 @@ import copy
 import math 
 
 class Fraction():
-    def __init__(self, numerator, denominator, isMixed=False, wholenum=None):
-        self.wholenum = wholenum
+    def __init__(self, numerator=1, denominator=1, isMixed=False, wholenum=None):
+        if wholenum is None:
+            self.wholenum = None 
+        else:
+            self.wholenum = int(wholenum)
         self.numerator = int(numerator)
 
         if denominator == 0: 
@@ -13,7 +16,10 @@ class Fraction():
         self.isMixed = isMixed 
 
         if isMixed:
-            self.numerator = int(denominator) * int(wholenum) + int(numerator)
+            self.numerator = abs(int(denominator) * int(wholenum)) + int(numerator)
+            #Account for negative values
+            if self.wholenum < 0:
+                self.numerator *= -1
             self.wholenum = None
 
     def reduce(self):
@@ -61,7 +67,7 @@ class Fraction():
     def __sub__(self, o):
         res = self.prepareForAddOrSub(o)
 
-        numerator = res[0].numerator - res[1].numerator 
+        numerator = int(res[0].numerator) - int(res[1].numerator)
         newNum = Fraction(numerator=numerator, denominator=res[1].denominator)
         newNum.reduce()
         return newNum
