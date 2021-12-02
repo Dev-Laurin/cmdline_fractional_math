@@ -74,6 +74,7 @@ class Test_zero():
     def test_div_zero(self):
         try:
             calculate("1/2 / 0").toString()
+            assert 1 == -1
         except ZeroDivisionError:
             assert 1 == 1 
 
@@ -108,5 +109,64 @@ class Test_spaces():
 
     def test_spaces_everywhere(self):
         assert calculate("    -3_1/4     -      -5_1/4   ").toString() == "2"
-        
+
+# class Test_long_input():
+#     def test_long_div(self):
+#         assert calculate("1/2/4 + 5/6").toString() == "23/24"
+
+#     def test_long_fraction(self):
+#         assert calculate("1/2 + 5/6 + 3/4 + 7/8").toString() == "71/24"
+
+#     def test_long_improper_fraction(self):
+#         assert calculate("3/2 + 8/6 + 33/4 + 90/8").toString() == "67/3"
+
 #malformed input
+class Test_malformed():
+    def test_multiple_division(self):
+        try:
+            print(calculate("-3_1/4//4 + -5_1/4").toString())
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
+
+    def test_multiple_addition(self):
+        try: 
+            calculate("-3/4 +  + 3/4")
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
+    
+    def test_multiple_multiplication(self):
+        try:
+            calculate("-3/4 * * 5/6")
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
+
+    def test_invalid_preorder(self):
+        try: 
+            calculate("* -3/4 + 9")
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
+
+    def test_invalid_postorder(self):
+        try:
+            calculate("-7/9 - 9 -")
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
+
+    def test_invalid_char(self):
+        try:
+            calculate("-8/5 * 4 &")
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
+
+    def test_no_op(self):
+        try:
+            print(calculate("-8/5 7/8").toString())
+            assert 1 == -1
+        except ValueError:
+            assert 1 == 1
