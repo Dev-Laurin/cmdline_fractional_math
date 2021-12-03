@@ -110,15 +110,18 @@ class Test_spaces():
     def test_spaces_everywhere(self):
         assert calculate("    -3_1/4     -      -5_1/4   ").toString() == "2"
 
-# class Test_long_input():
-#     def test_long_div(self):
-#         assert calculate("1/2/4 + 5/6").toString() == "23/24"
+class Test_long_input():
+    def test_long_div(self):
+        assert calculate("1/2/4 + 5/6").toString() == "23/24"
 
-#     def test_long_fraction(self):
-#         assert calculate("1/2 + 5/6 + 3/4 + 7/8").toString() == "71/24"
+    def test_long_fraction(self):
+        assert calculate("1/2 + 5/6 + 3/4 + 7/8").toString() == "2_23/24"
 
-#     def test_long_improper_fraction(self):
-#         assert calculate("3/2 + 8/6 + 33/4 + 90/8").toString() == "67/3"
+    def test_long_improper_fraction(self):
+        assert calculate("3/2 + 8/6 + 33/4 + 90/8").toString() == "22_1/3"
+
+    def test_long_mixed(self):
+        assert calculate("1_3/2 + 2_8/6 + 5_33/4 + 4_90/8").toString() == "34_1/3"
 
 #malformed input
 class Test_malformed():

@@ -132,7 +132,7 @@ def Lex(string):
                     PREV_STATE = CURRENT_STATE
                     CURRENT_STATE = STATE.SPACE 
             else: 
-                raise ValueError("Invalid character in string.")
+                raise ValueError("Invalid character in string '" + str(char) + "'")
         i += 1 
 
     return lexemes

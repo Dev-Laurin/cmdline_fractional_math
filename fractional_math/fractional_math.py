@@ -3,6 +3,12 @@ from .lexer import Lexeme, LEX, Lex
 def calculateLexemes(num1, num2, op):
     return op.VAL.eval(num1.VAL, num2.VAL)
 
+def printList(list, listname):
+    print(listname, "[")
+    for l in list:
+        l.print()
+    print("]")
+
 def convert_to_reverse_polish_notation(lexemes):
     OUT = []
     OP = []
@@ -17,7 +23,7 @@ def convert_to_reverse_polish_notation(lexemes):
         elif lex.TYPE == LEX.OP:
             if len(OP) > 0 and lex.VAL <= OP[-1].VAL:
                 OUT.append(OP[-1])
-                OP.pop(0)
+                OP.pop()
                 OP.append(lex)
                 op_count += 1 
             else:
@@ -55,9 +61,9 @@ def calculate(str):
     return res.VAL 
 
 def main():
-    print("Fractional calculator. Type q to exit.")
+    print("Fractional calculator. Type q to quit.")
     user_input = ""
-    while(user_input != "quit"):
+    while(user_input != "q"):
         user_input = input("? ")
         try:
             print("= " + calculate(user_input).toString())
@@ -66,7 +72,8 @@ def main():
         except TypeError:
             print("Error: Invalid input. Must have operands and operators separated by spaces with the number of operators < number of operands.")
         except ValueError as e:
-            print("Error:", e)
+            if user_input != "q":
+                print("Error:", e)
 
 if __name__ == '__main__':
     main()
