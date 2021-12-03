@@ -48,6 +48,7 @@ pytest
 * Make compatible with parenthesis
 * Add GithubActions workflow with auto-running of tests and a dynamic badge to match. 
 * Add a security linter in workflow with automated badge. 
+* Make into a legit python package
 
 # Interview Specific Notes
 * If writing this for a job I would have used an existing python package. I wrote this out because I'm assuming you wanted to see what my workflow and problem solving looked like. 
