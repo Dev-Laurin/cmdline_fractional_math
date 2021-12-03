@@ -1,7 +1,8 @@
-# cmdline_fractional_math
-A command line program that takes a string of fractions and operators and returns the mathematical result.
+# cmdline_fractional_math ![test coverage badge](https://img.shields.io/badge/test%20coverage-92%25-brightgreen) ![tests badge](https://img.shields.io/badge/tests-41%20passed%2C%200%20failed-brightgreen)
+A command line program that takes a string of fractions and operators then returns the mathematical result.
 
-# Instructions
+
+# Requirements
 Write a command line program in the language of your choice that will take operations on fractions as an input and produce a fractional result.
 
 * Legal operators shall be *, /, +, - (multiply, divide, add, subtract)
@@ -22,7 +23,7 @@ Example run:
 
 = 3_1/2
 
-# Run Tests 
+# Setup
 * Clone repo
 * Run setup.py from Python 3+
 ```python
@@ -32,7 +33,13 @@ python3 setup.py
 ```
 pip install -e .
 ```
-* Run pytest
+
+# Run 
+```python
+python3 run.py
+```
+
+# Run Tests 
 ```
 pytest
 ```
