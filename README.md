@@ -47,10 +47,4 @@ pytest
 # Future Work 
 * Make compatible with parenthesis
 * Add GithubActions workflow with auto-running of tests and a dynamic badge to match. 
-* Add a security linter in workflow with automated badge. 
-* Make into a legit python package
-
-# Interview Specific Notes
-* If writing this for a job I would have used an existing python package. I wrote this out because I'm assuming you wanted to see what my workflow and problem solving looked like. 
-* I remembered my professor using reverse polish notation in college for a calculator and decided this would be a perfect time to learn and use that. 
-* I didn't write Unit tests because the Integration tests covered everything that wasn't a print function (small and single purpose). In reality I would've written Unit tests and then removed them later if necessary to make the testing suite efficient and less overburdened. 
+* Add a security linter in workflow with automated badge. SonarCloud?
