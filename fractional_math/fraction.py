@@ -2,7 +2,7 @@ import copy
 import math 
 
 class Fraction():
-    def __init__(self, numerator=1, denominator=1, isMixed=False, wholenum=None):
+    def __init__(self, numerator=1, denominator=1, is_mixed=False, wholenum=None):
         if wholenum is None:
             self.wholenum = None 
         else:
@@ -13,9 +13,9 @@ class Fraction():
             raise ZeroDivisionError("Fraction init cannot have 0 as a denominator.")
 
         self.denominator = int(denominator)
-        self.isMixed = isMixed 
+        self.isMixed = is_mixed 
 
-        if isMixed:
+        if is_mixed:
             self.numerator = abs(int(denominator) * int(wholenum)) + int(numerator)
             #Account for negative values
             if self.wholenum < 0:
@@ -30,7 +30,6 @@ class Fraction():
     def prepareForAddOrSub(self, o):
         lhs = copy.deepcopy(self)
         rhs = copy.deepcopy(o) 
-        
         lhs.denominator = self.denominator * o.denominator 
         lhs.numerator = self.numerator * o.denominator
         rhs.denominator = lhs.denominator

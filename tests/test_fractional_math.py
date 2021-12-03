@@ -1,6 +1,5 @@
 from fractional_math.fractional_math import calculate
 
-# Integration Tests
 class Test_simple_whole_math():
     def test_two_nums(self):
         assert "2" == calculate("1 + 1").toString()

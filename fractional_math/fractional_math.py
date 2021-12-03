@@ -1,6 +1,6 @@
 from .lexer import Lexeme, LEX, Lex
 
-def calculateLexemes(num1, num2, op):
+def calculate_lexemes(num1, num2, op):
     return op.VAL.eval(num1.VAL, num2.VAL)
 
 def printList(list, listname):
@@ -43,12 +43,11 @@ def calculate_reverse_polish_notation(stack):
     i = 0 
     while i < len(stack) and i >= 0 and len(stack) > 0:
         if stack[i].TYPE == LEX.OP:
-            num = calculateLexemes(stack[i-2], stack[i-1], stack[i])
+            num = calculate_lexemes(stack[i-2], stack[i-1], stack[i])
             stack.insert(i+1, Lexeme(LEX.NUM, 0, fraction=num))
             stack.pop(i)
             stack.pop(i-1)
             stack.pop(i-2)
-
             i = -1
         i += 1
 

@@ -4,29 +4,18 @@ from .fraction import Fraction
 from .op import Operator 
 
 class LEX(Enum):
-    DIVIDE = 0
-    MULT = 1
-    SUB = 2
-    ADD = 3
-    MIXED = 4
-    NUM = 5 
-    OP = 6
-    UNDERSCORE = 7
+    MIXED = 0
+    NUM = 1
+    OP = 2
 
 class STATE(Enum):
-    START = -1 
-    NUM = 0
-    OP = 1 
-    SPACE = 2 
-    MIXED_NUM = 3
-    END = 4 
-    DIVIDE = 5 
-    MULT = 6
-    ADD = 7 
-    SUB = 8 
-    UNDEFINED = 100
+    START = 0 
+    NUM = 1
+    OP = 2
+    SPACE = 3
+    MIXED_NUM = 4
 
-def isNum(num):
+def is_num(num):
     try: 
         float(num)
         return True 
@@ -34,13 +23,13 @@ def isNum(num):
         return False 
 
 class Lexeme():
-    def __init__(self, type, value, isMixed=False, numerator=None, denominator=None, fraction=None):
+    def __init__(self, type, value, is_mixed=False, numerator=None, denominator=None, fraction=None):
         self.TYPE = type 
         self.VAL = value 
-        self.isMixed = isMixed
+        self.is_mixed = is_mixed
 
         if type == LEX.MIXED:
-            self.VAL = Fraction(wholenum=value, isMixed=True, numerator=numerator, denominator=denominator)
+            self.VAL = Fraction(wholenum=value, is_mixed=True, numerator=numerator, denominator=denominator)
         elif type == LEX.NUM:
             self.VAL = Fraction(value, 1)
         elif type == LEX.OP:
@@ -48,12 +37,6 @@ class Lexeme():
 
         if fraction is not None:
             self.VAL = fraction 
-
-    def __repr__(self):
-        return str(self.VAL)
-
-    def __str__(self):
-        return str(self.VAL)
 
     def print(self):
         self.VAL.print()
@@ -69,7 +52,7 @@ def Lex(string):
     while i < len(string): 
         char = string[i]
         #Check if character can be converted to a number
-        if isNum(char):
+        if is_num(char):
             lexeme += char
 
             if CURRENT_STATE != STATE.NUM:
@@ -93,12 +76,12 @@ def Lex(string):
                     j += 1
                     c = string[j]
                     denominator = ""
-                    while j < len(string) and isNum(string[j]):
+                    while j < len(string) and is_num(string[j]):
                         c = string[j]
                         denominator += c 
                         j += 1
                     lexemes.append(Lexeme(LEX.MIXED, int(lexeme), numerator=numerator, 
-                    isMixed=True, denominator=denominator))
+                    is_mixed=True, denominator=denominator))
                     lexeme = ""
                     i = j - 1
             else:
@@ -112,12 +95,10 @@ def Lex(string):
                 lexeme = ""
             
             if char in "*/+":
-                #True OP
                 lexemes.append(Lexeme(LEX.OP,char))  
                 PREV_STATE = CURRENT_STATE 
                 CURRENT_STATE = STATE.OP 
             elif char in "-" and CURRENT_STATE == STATE.SPACE and (PREV_STATE == STATE.NUM or PREV_STATE == STATE.MIXED_NUM):
-                #True OP
                 lexemes.append(Lexeme(LEX.OP,char))  
                 PREV_STATE = CURRENT_STATE 
                 CURRENT_STATE = STATE.OP 
@@ -127,7 +108,7 @@ def Lex(string):
                 PREV_STATE = CURRENT_STATE 
                 CURRENT_STATE = STATE.NUM 
             elif char == " ":
-                #record only once
+                #don't override previous state due to multiple spaces
                 if CURRENT_STATE != STATE.SPACE:
                     PREV_STATE = CURRENT_STATE
                     CURRENT_STATE = STATE.SPACE 
